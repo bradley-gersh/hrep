@@ -1,5 +1,9 @@
 - Move tuneR to SUGGESTS.
 
+# hrep 0.16.1-SNAPSHOT
+
+- Allow pi_chord to include duplicate pitches.
+
 # hrep 0.16.1
 
 - Remove unnecessary info messages.
@@ -10,9 +14,9 @@
 
 # hrep 0.15.0
 
-- Add and propagate a `coherent` option for summing amplitudes. 
+- Add and propagate a `coherent` option for summing amplitudes.
 Setting `coherent == TRUE` means coherent phases, so amplitudes are summed using addition;
-setting `coherent == FALSE` means incoherent phases, so amplitudes are summed using 
+setting `coherent == FALSE` means incoherent phases, so amplitudes are summed using
 the root mean square. This argument is now available in many `hrep` functions
 where spectra are constructed.
 
