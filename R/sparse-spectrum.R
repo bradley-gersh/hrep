@@ -227,8 +227,11 @@ combine_sparse_spectra <- function(..., digits = 6, coherent = FALSE) {
 #' Otherwise incoherent summation is used, where the amplitudes are squared, added, then
 #' square rooted.
 #'
+#' @param collapse Whether or not to combine spectral components (default is
+#' \code{TRUE}). If FALSE, the \code{coherent} parameter is ignored.
+#'
 #' @return A dataframe.
-collapse_summing_amplitudes <- function(x, digits, modulo = NA_real_, coherent = FALSE) {
+collapse_summing_amplitudes <- function(x, digits, modulo = NA_real_, coherent = FALSE, collapse = TRUE) {
   checkmate::qassert(modulo, "n1(0,)")
   if (!is.list(x) ||
       !all(purrr::map_lgl(x, ~ is.data.frame(.) &&
@@ -245,19 +248,27 @@ collapse_summing_amplitudes <- function(x, digits, modulo = NA_real_, coherent =
       # Modulo needs to be done before and after because of subtle edge cases!
       .
     } %>%
-    {reduce_by_key(
-      keys = .$x,
-      values = if (has_labels) purrr::map2(.$y, .$labels, ~ list(amplitude = .x, label = .y)) else .$y,
-      function(x, y) {
-        if (has_labels) {
-          list(amplitude = sum_amplitudes(x, y$amplitude, coherent = coherent),
-               label = y$label)
-        } else {
-          sum_amplitudes(x, y, coherent = coherent)
-        }
-      },
-      key_type = "numeric"
-    )} %>% {
+    {if (collapse) {
+      reduce_by_key(
+        keys = .$x,
+        values = if (has_labels) purrr::map2(.$y, .$labels, ~ list(amplitude = .x, label = .y)) else .$y,
+        function(x, y) {
+          if (has_labels) {
+            list(amplitude = sum_amplitudes(x, y$amplitude, coherent = coherent),
+                label = y$label)
+          } else {
+            sum_amplitudes(x, y, coherent = coherent)
+          }
+        },
+        key_type = "numeric"
+      )
+    } else {
+      print('========')
+      print(head(x, n=10))
+      print(head(., n=10))
+      print('========')
+      .
+    }} %>% {
       if (has_labels) {
         list(x = .[[1]],
              y = purrr::map_dbl(.[[2]], "amplitude"),

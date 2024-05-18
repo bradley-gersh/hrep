@@ -3,18 +3,20 @@
 #' Constructor function for objects of class "pi_chord".
 #' @param x (Numeric vector) MIDI note numbers in ascending order
 #' @keywords internal
-.pi_chord <- function(...) {
+.pi_chord <- function(duplicates = FALSE, ...) {
   x <- unclass(c(...))
   checkmate::qassert(x, "N+")
-  stopifnot(!anyDuplicated(x), isTRUE(all.equal(x, sort(x))))
-            class(x) <- c("pi_chord", "chord", "numeric")
-            x
+  if (!duplicates)
+    stopifnot(!anyDuplicated(x), isTRUE(all.equal(x, sort(x))))
+
+  class(x) <- c("pi_chord", "chord", "numeric")
+  x
 }
 
 #' Pitch chord
 #'
 #' This function represents an object as a pitch chord.
-#' A pitch chord is defined as a set of non-duplicated
+#' A pitch chord is defined as a set of (optionally non-duplicated)
 #' pitches, expressed as MIDI note numbers.
 #'
 #' @param x Object to represent as a pitch chord.
@@ -23,6 +25,9 @@
 #' (Logical scalar)
 #' If \code{TRUE}, then objects will be coerced to a \code{pi_chord}
 #' representation even if the required mapping is not deterministic.
+#'
+#' @param duplicates
+#' If \code{TRUE}, allows duplicate pitches. Default \code{FALSE}.
 #'
 #' @param ...
 #' Present for S3 method compatibility.
@@ -34,16 +39,19 @@
 #' @rdname pi_chord
 #'
 #' @export
-pi_chord <- function(x, force = FALSE) {
+pi_chord <- function(x, force = FALSE, duplicates = FALSE) {
   UseMethod("pi_chord")
 }
 
 #' @export
 #' @rdname pi_chord
-pi_chord.numeric <- function(x, ...) {
+pi_chord.numeric <- function(x, duplicates = FALSE, ...) {
   if (is.smooth_spectrum(x))
     stop("cannot translate smooth spectra to pi_chord representations")
-  .pi_chord(sort(unique(unclass(x))))
+
+  sorted <- if (duplicates) sort(unclass(x)) else (sort(unique(unclass(x))))
+
+  .pi_chord(duplicates, sorted)
 }
 
 #' @export
