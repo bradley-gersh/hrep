@@ -263,11 +263,7 @@ collapse_summing_amplitudes <- function(x, digits, modulo = NA_real_, coherent =
         key_type = "numeric"
       )
     } else {
-      print('========')
-      print(head(x, n=10))
-      print(head(., n=10))
-      print('========')
-      .
+      .[order(.$x),]
     }} %>% {
       if (has_labels) {
         list(x = .[[1]],
