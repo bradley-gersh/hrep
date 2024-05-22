@@ -1,6 +1,6 @@
 Package: hrep
 Title: Harmony Representations
-Version: 0.16.1-SNAPSHOT
+Version: 0.16.2
 Authors@R: person("Peter", "Harrison", email = "pmc.harrison@gmail.com", role = c("aut", "cre"))
 Description: This package provides utilities for representing and manipulating
     chord sequences for perceptually informed harmony modelling.
