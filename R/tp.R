@@ -29,10 +29,10 @@ tp.pc_chord <- function(x, interval) {
 
 #' @rdname tp
 #' @export
-tp.pi_chord <- function(x, interval) {
+tp.pi_chord <- function(x, interval, duplicates = FALSE) {
   checkmate::qassert(interval, "N1")
   x <- as.numeric(x)
-  .pi_chord(x + interval)
+  .pi_chord(x + interval, duplicates)
 }
 
 #' @rdname tp

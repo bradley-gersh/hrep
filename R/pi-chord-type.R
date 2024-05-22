@@ -2,11 +2,11 @@
 #'
 #' This is the low-level construct for pitch chord type.
 #' @keywords internal
-.pi_chord_type <- function(x) {
+.pi_chord_type <- function(x, duplicates = FALSE) {
   checkmate::qassert(x, "N+")
   x <- as.numeric(x)
   stopifnot(x[1] == 0,
-            !anyDuplicated(x),
+            duplicates || (!duplicates && !anyDuplicated(x)),
             isTRUE(all.equal(x, sort(x))))
   class(x) <- c("pi_chord_type", "pi_chord", "chord")
   x
@@ -27,8 +27,8 @@ pi_chord_type <- function(x) {
 
 #' @export
 #' @rdname pi_chord_type
-pi_chord_type.default <- function(x) {
-  pi_chord_type(pi_chord(x))
+pi_chord_type.default <- function(x, duplicates = FALSE) {
+  pi_chord_type(pi_chord(x, duplicates))
 }
 
 #' @export

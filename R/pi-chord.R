@@ -2,15 +2,19 @@
 #'
 #' Constructor function for objects of class "pi_chord".
 #' @param x (Numeric vector) MIDI note numbers in ascending order
+#'
+#' @param duplicates (Logical scalar) Whether x is allowed to contain duplicate
+#' notes (default \code{FALSE}).
+#'
 #' @keywords internal
-.pi_chord <- function(duplicates = FALSE, ...) {
-  x <- unclass(c(...))
-  checkmate::qassert(x, "N+")
-  if (!duplicates)
-    stopifnot(!anyDuplicated(x), isTRUE(all.equal(x, sort(x))))
+.pi_chord <- function(x, duplicates = FALSE) {
+  x_in <- unclass(x)
+  checkmate::qassert(x_in, "N+")
+  stopifnot(duplicates || (!duplicates && !anyDuplicated(x_in)),
+            isTRUE(all.equal(x_in, sort(x_in))))
 
-  class(x) <- c("pi_chord", "chord", "numeric")
-  x
+  class(x_in) <- c("pi_chord", "chord", "numeric")
+  x_in
 }
 
 #' Pitch chord
@@ -27,6 +31,7 @@
 #' representation even if the required mapping is not deterministic.
 #'
 #' @param duplicates
+#' (Logical scalar)
 #' If \code{TRUE}, allows duplicate pitches. Default \code{FALSE}.
 #'
 #' @param ...
@@ -51,7 +56,7 @@ pi_chord.numeric <- function(x, duplicates = FALSE, ...) {
 
   sorted <- if (duplicates) sort(unclass(x)) else (sort(unique(unclass(x))))
 
-  .pi_chord(duplicates, sorted)
+  .pi_chord(sorted, duplicates)
 }
 
 #' @export
