@@ -61,12 +61,12 @@ pi_chord.numeric <- function(x, duplicates = FALSE, ...) {
 
 #' @export
 #' @rdname pi_chord
-pi_chord.character <- function(x, ...) {
+pi_chord.character <- function(x, duplicates = FALSE, ...) {
   stopifnot(length(x) == 1L)
   y <- as.numeric(strsplit(x, split = " ")[[1]])
   if (anyNA(y)) stop("malformed character input, should be of the form ",
                      "'60 64 67'")
-  pi_chord(y)
+  pi_chord(y, duplicates = duplicates)
 }
 
 #' @export
