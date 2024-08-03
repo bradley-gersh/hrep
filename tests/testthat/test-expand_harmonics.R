@@ -81,13 +81,13 @@ test_that("rounding", {
 })
 
 test_that("non-collapse", {
-  c(0, 0) %>% pi_chord(duplicates = TRUE) %>%
+  c(0, 0) %>% pi_chord(collapse = FALSE) %>%
     expand_harmonics(digits = 0, num_harmonics = 5, collapse = FALSE) %>%
     as.data.frame() %>%
     expect_equal(data.frame(x = c(0, 0, 12, 12, 19, 19, 24, 24, 28, 28),
                             y = c(1, 1, 1/2, 1/2, 1/3, 1/3, 1/4, 1/4, 1/5, 1/5)))
 
-  c(0, 0, 7) %>% pi_chord(duplicates = TRUE) %>% expand_harmonics(digits = 0,
+  c(0, 0, 7) %>% pi_chord(collapse = FALSE) %>% expand_harmonics(digits = 0,
                                                  num_harmonics = 5,
                                                  collapse = FALSE) %>%
     as.data.frame() %>%

@@ -3,14 +3,14 @@
 #' Constructor function for objects of class "pi_chord".
 #' @param x (Numeric vector) MIDI note numbers in ascending order
 #'
-#' @param duplicates (Logical scalar) Whether x is allowed to contain duplicate
-#' notes (default \code{FALSE}).
+#' @param collapse (Logical scalar) Whether duplicate notes are removed from x
+#' (default \code{TRUE}).
 #'
 #' @keywords internal
-.pi_chord <- function(x, duplicates = FALSE) {
+.pi_chord <- function(x, collapse = TRUE) {
   x_in <- unclass(x)
   checkmate::qassert(x_in, "N+")
-  stopifnot(duplicates || (!duplicates && !anyDuplicated(x_in)),
+  stopifnot(!collapse || (collapse && !anyDuplicated(x_in)),
             isTRUE(all.equal(x_in, sort(x_in))))
 
   class(x_in) <- c("pi_chord", "chord", "numeric")
@@ -30,9 +30,9 @@
 #' If \code{TRUE}, then objects will be coerced to a \code{pi_chord}
 #' representation even if the required mapping is not deterministic.
 #'
-#' @param duplicates
+#' @param collapse
 #' (Logical scalar)
-#' If \code{TRUE}, allows duplicate pitches. Default \code{FALSE}.
+#' If \code{TRUE}, removes duplicate pitches. Default \code{TRUE}.
 #'
 #' @param ...
 #' Present for S3 method compatibility.
@@ -44,29 +44,29 @@
 #' @rdname pi_chord
 #'
 #' @export
-pi_chord <- function(x, force = FALSE, duplicates = FALSE) {
+pi_chord <- function(x, force = FALSE, collapse = TRUE) {
   UseMethod("pi_chord")
 }
 
 #' @export
 #' @rdname pi_chord
-pi_chord.numeric <- function(x, duplicates = FALSE, ...) {
+pi_chord.numeric <- function(x, collapse = TRUE, ...) {
   if (is.smooth_spectrum(x))
     stop("cannot translate smooth spectra to pi_chord representations")
 
-  sorted <- if (duplicates) sort(unclass(x)) else (sort(unique(unclass(x))))
+  sorted <- if (!collapse) sort(unclass(x)) else (sort(unique(unclass(x))))
 
-  .pi_chord(sorted, duplicates)
+  .pi_chord(sorted, collapse)
 }
 
 #' @export
 #' @rdname pi_chord
-pi_chord.character <- function(x, duplicates = FALSE, ...) {
+pi_chord.character <- function(x, collapse = TRUE, ...) {
   stopifnot(length(x) == 1L)
   y <- as.numeric(strsplit(x, split = " ")[[1]])
   if (anyNA(y)) stop("malformed character input, should be of the form ",
                      "'60 64 67'")
-  pi_chord(y, duplicates = duplicates)
+  pi_chord(y, collapse = collapse)
 }
 
 #' @export

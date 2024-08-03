@@ -86,8 +86,8 @@ sparse_fr_spectrum.pi_chord <- function(x, ...) {
 
 #' @rdname sparse_fr_spectrum
 #' @export
-sparse_fr_spectrum.default <- function(x, duplicates = FALSE, ...) {
-  sparse_fr_spectrum(pi_chord(x, duplicates = duplicates), ...)
+sparse_fr_spectrum.default <- function(x, collapse = TRUE, ...) {
+  sparse_fr_spectrum(pi_chord(x, collapse = collapse), ...)
 }
 
 #' @rdname sparse_fr_spectrum

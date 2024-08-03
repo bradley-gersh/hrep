@@ -96,8 +96,8 @@ sparse_pi_spectrum.list <- function(x, ...) {
 
 #' @rdname sparse_pi_spectrum
 #' @export
-sparse_pi_spectrum.default <- function(x, duplicates = FALSE, ...) {
-  sparse_pi_spectrum(pi_chord(x, duplicates = duplicates), ...)
+sparse_pi_spectrum.default <- function(x, collapse = TRUE, ...) {
+  sparse_pi_spectrum(pi_chord(x, collapse = collapse), ...)
 }
 
 #' @param amplitude (Numeric vector)
@@ -112,6 +112,7 @@ sparse_pi_spectrum.default <- function(x, duplicates = FALSE, ...) {
 sparse_pi_spectrum.pi_chord <- function(x,
                                         amplitude = 1,
                                         coherent = FALSE,
+                                        collapse = TRUE,
                                         ...) {
   checkmate::qassert(amplitude, "N")
   if (length(amplitude) == 1L) amplitude <- rep_to_match(amplitude, x)
@@ -119,6 +120,7 @@ sparse_pi_spectrum.pi_chord <- function(x,
   expand_harmonics(.sparse_pi_spectrum(pitch = as.numeric(x),
                                        amplitude = amplitude),
                    coherent = coherent,
+                   collapse = collapse,
                    ...)
 }
 
