@@ -97,7 +97,7 @@ sparse_pi_spectrum.list <- function(x, ...) {
 #' @rdname sparse_pi_spectrum
 #' @export
 sparse_pi_spectrum.default <- function(x, collapse = TRUE, ...) {
-  sparse_pi_spectrum(pi_chord(x, collapse = collapse), ...)
+  sparse_pi_spectrum(pi_chord(x, collapse = collapse), collapse = collapse, ...)
 }
 
 #' @param amplitude (Numeric vector)

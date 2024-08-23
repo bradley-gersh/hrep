@@ -50,8 +50,8 @@
       "Source": "GitHub",
       "RemoteType": "github",
       "RemoteHost": "api.github.com",
-      "RemoteRepo": "abcR",
       "RemoteUsername": "pmcharrison",
+      "RemoteRepo": "abcR",
       "RemoteRef": "master",
       "RemoteSha": "ddb23ba8e61442b589c36ef93efc6925926411b6",
       "Requirements": [
@@ -123,7 +123,7 @@
     },
     "checkmate": {
       "Package": "checkmate",
-      "Version": "2.3.1",
+      "Version": "2.3.2",
       "Source": "Repository",
       "Repository": "CRAN",
       "Requirements": [
@@ -131,7 +131,7 @@
         "backports",
         "utils"
       ],
-      "Hash": "c01cab1cb0f9125211a6fc99d540e315"
+      "Hash": "0e14e01ce07e7c88fd25de6d4260d26b"
     },
     "cli": {
       "Package": "cli",
@@ -178,14 +178,14 @@
     },
     "data.table": {
       "Package": "data.table",
-      "Version": "1.15.2",
+      "Version": "1.15.4",
       "Source": "Repository",
       "Repository": "CRAN",
       "Requirements": [
         "R",
         "methods"
       ],
-      "Hash": "536dfe4ac4093b5d115caed7a1a7223b"
+      "Hash": "8ee9ac56ef633d0c7cab8b2ca87d683e"
     },
     "digest": {
       "Package": "digest",

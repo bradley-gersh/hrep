@@ -80,14 +80,14 @@ sparse_fr_spectrum.sparse_pi_spectrum <- function(x, ...) {
 
 #' @rdname sparse_fr_spectrum
 #' @export
-sparse_fr_spectrum.pi_chord <- function(x, ...) {
-  sparse_fr_spectrum(sparse_pi_spectrum(x, ...))
+sparse_fr_spectrum.pi_chord <- function(x, collapse = TRUE, ...) {
+  sparse_fr_spectrum(sparse_pi_spectrum(x, collapse = collapse, ...))
 }
 
 #' @rdname sparse_fr_spectrum
 #' @export
 sparse_fr_spectrum.default <- function(x, collapse = TRUE, ...) {
-  sparse_fr_spectrum(pi_chord(x, collapse = collapse), ...)
+  sparse_fr_spectrum(pi_chord(x, collapse = collapse), collapse = collapse, ...)
 }
 
 #' @rdname sparse_fr_spectrum
